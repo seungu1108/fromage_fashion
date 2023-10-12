@@ -161,16 +161,16 @@ def validate(val_loader, model, tokenizer, criterion, epoch, args):
             raise NotImplementedError
 
           if i == 0:
-            max_to_display = 5
-            print('=' * 30)
-            print('Generated samples:')
-            for cap_i, cap in enumerate(generated_captions[:max_to_display]):
-              print(f'{cap_i}) {cap}')
-            print('=' * 30)
-            print('Real samples:')
-            for cap_i, cap in enumerate(gt_captions[:max_to_display]):
-              print(f'{cap_i}) {cap}')
-            print('=' * 30)
+            # max_to_display = 5
+            # print('=' * 30)
+            # print('Generated samples:')
+            # for cap_i, cap in enumerate(generated_captions[:max_to_display]):
+            #   print(f'{cap_i}) {cap}')
+            # print('=' * 30)
+            # print('Real samples:')
+            # for cap_i, cap in enumerate(gt_captions[:max_to_display]):
+            #   print(f'{cap_i}) {cap}')
+            # print('=' * 30)
 
             # Write images and captions to Tensorboard.
             if not args.distributed or (args.rank % ngpus_per_node == 0):
@@ -206,9 +206,9 @@ def validate(val_loader, model, tokenizer, criterion, epoch, args):
         path2captions[image_path].append(caption[0].replace('[RET]', ''))
       full_gt_captions = [path2captions[path] for path in all_generated_image_paths]
 
-      print(f'Computing BLEU with {len(all_generated_captions)} generated captions:'
-            f'{all_generated_captions[:5]} and {len(full_gt_captions)} groundtruth captions:',
-            f'{full_gt_captions[:5]}.')
+      # print(f'Computing BLEU with {len(all_generated_captions)} generated captions:'
+      #       f'{all_generated_captions[:5]} and {len(full_gt_captions)} groundtruth captions:',
+      #       f'{full_gt_captions[:5]}.')
       bleu1_score = bleu_scorers[0](all_generated_captions, full_gt_captions)
       bleu1.update(bleu1_score, 1)
       bleu2_score = bleu_scorers[1](all_generated_captions, full_gt_captions)

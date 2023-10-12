@@ -441,11 +441,12 @@ class FromageModel(nn.Module):
 
 class Fromage(nn.Module):
   def __init__(self, tokenizer, model_args: Optional[FrozenArgs] = None,
-               path_array: Optional[List[str]] = None, emb_matrix: Optional[torch.tensor] = None):
+               path_array: Optional[List[str]] = None, emb_matrix: Optional[torch.tensor] = None,link_array: Optional[List[str]] = None):
     super().__init__()
     self.model = FromageModel(tokenizer, model_args)
     self.path_array = path_array
     self.emb_matrix = emb_matrix
+    self.link_array = link_array
 
   def __call__(self, images: Tensor, tgt_tokens: Optional[Tensor] = None, caption_len: Optional[Tensor] = None,
                generate: bool = False, num_words: int = 32, temperature: float = 1.0, top_p: float = 1.0,
@@ -563,12 +564,15 @@ class Fromage(nn.Module):
         # Get the top max_img_per_ret + 3 (in case some fail) images for each image.
         _, top_image_idx = scores.squeeze().topk(max_img_per_ret + 3)
         image_outputs = []
+        link = []
         for img_idx in top_image_idx:
           # Find the first image that does not error out.
           try:
             seen_image_idx.append(img_idx)
             img = utils.get_image_from_url(self.path_array[img_idx])
             image_outputs.append(img)
+            # image_outputs.append(self.path_array[img_idx])
+            link.append(self.link_array[img_idx])
             if len(image_outputs) == max_img_per_ret:
               break
           except UnidentifiedImageError:
@@ -578,6 +582,8 @@ class Fromage(nn.Module):
         last_ret_idx = ret_idx + 1
         return_outputs.append(utils.truncate_caption(caption) + ' [RET]')
         return_outputs.append(image_outputs)
+        return_outputs.append(link)
+
 
     return return_outputs
 
@@ -642,6 +648,7 @@ def load_fromage(model_dir: str) -> Fromage:
   # Construct embedding matrix for nearest neighbor lookup.
   path_array = []
   emb_matrix = []
+  link_array = []
 
   # These were precomputed for all CC3M images with `model.get_visual_embs(image, mode='retrieval')`.
   for p in embs_paths:
@@ -649,6 +656,7 @@ def load_fromage(model_dir: str) -> Fromage:
         train_embs_data = pkl.load(wf)
         path_array.extend(train_embs_data['paths'])
         emb_matrix.append(train_embs_data['embeddings'])
+        link_array.extend(train_embs_data['item_url'])
   emb_matrix = np.concatenate(emb_matrix, axis=0)
 
   # Number of paths should be equal to number of embeddings.
@@ -669,7 +677,7 @@ def load_fromage(model_dir: str) -> Fromage:
   args = namedtuple('args', model_kwargs)(**model_kwargs)
 
   # Initialize model for inference.
-  model = Fromage(tokenizer, args, path_array=path_array, emb_matrix=emb_matrix)
+  model = Fromage(tokenizer, args, path_array=path_array, emb_matrix=emb_matrix,link_array=link_array)
   model = model.eval()
   model = model.bfloat16()
   model = model.cuda()
