@@ -1,0 +1,7 @@
+version: "Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)"
+options: "d9c41c418c195553c5eada688f2e4b2e96dbd1e7ed178496d619cf83c5d0068c"
+build_start_time: [1696342088, 951142000]
+build_end_time: [1696342088, 987596000]
+inputs:
+  "/Users/yena/.pub-cache/hosted/pub.dev/url_launcher_macos-3.0.7/macos/Classes/UrlLauncherPlugin.swift": !private [1695984228, 836711081]
+  "/Users/yena/.pub-cache/hosted/pub.dev/url_launcher_macos-3.0.7/macos/Classes/messages.g.swift": !private [1695984228, 836532752]

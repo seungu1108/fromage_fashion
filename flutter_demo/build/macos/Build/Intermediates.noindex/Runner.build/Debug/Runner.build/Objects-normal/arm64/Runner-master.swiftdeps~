@@ -1,0 +1,8 @@
+version: "Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)"
+options: "1eb5a84f2be85c6a228e7328db8d4a1b2b576f7bfd4eee67d38c44250cef8dce"
+build_start_time: [1696342107, 74710000]
+build_end_time: [1696342107, 128288000]
+inputs:
+  "/Users/yena/Desktop/python_study/Flutter/try_chatbot2/macos/Flutter/GeneratedPluginRegistrant.swift": !private [1696342075, 925260976]
+  "/Users/yena/Desktop/python_study/Flutter/try_chatbot2/macos/Runner/AppDelegate.swift": !private [1694634479, 0]
+  "/Users/yena/Desktop/python_study/Flutter/try_chatbot2/macos/Runner/MainFlutterWindow.swift": !private [1694634479, 0]
