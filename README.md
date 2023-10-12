@@ -39,11 +39,10 @@ The change point is that if the precision of img_emb is set to bfloat16, an erro
 
 The tsv file format is as follows.
 
-```
-caption image item_url
-A picture of a cat  cat.png http://cat.jpg
-Mountains  mountain.png http://mountain.jpg 
-```
+| caption | image | item_url |
+|---------|---------|---------|
+| A picture of a cat  | cat.png  | http://cat.jpg  |
+| Mountains  | mountain.png  | http://mountain.jpg  |
 
 ### Pretrained Checkpoints
 
@@ -57,9 +56,13 @@ You can change the location of the model file you trained once and the weighted 
 
 We used LLAMA to generate caption data because we had image data but there was no caption data to match it.
 
-`LLaMA-Adapter_2/llama_adapter_v2_multimodal7b/working/llama_test.py` proceeded through the corresponding script and used 7B here at [Link](https://github.com/shawwn/llama-dl/) for the weighted file.
+`LLaMA-Adapter_2/llama_adapter_v2_multimodal7b/working/llama_test.py` proceeded through the corresponding script and used 7B here at [Model Weight Link](https://github.com/shawwn/llama-dl/) for the weighted file.
 
 It generated 12,957 captions and took about 11 hours.
+
+Please refer to the link below for the folder and contents.
+
+[llama_adapter_v2_multimodal7b folder Link](https://github.com/seungu1108/fromage_fashion/tree/main/LLaMA-Adapter_2/llama_adapter_v2_multimodal7b)
 
 ### Preparing Dataset
 
