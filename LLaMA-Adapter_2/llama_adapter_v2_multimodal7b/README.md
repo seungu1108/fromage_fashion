@@ -1,5 +1,5 @@
 # Fashion focused image caption generation of LLaMA-Adapter-V2 Multi-modal
-* This project is to pre-process the dataset for Fromage multi-modal model. Since Fromage dataset should be the paired image-caption data formate, we use llama adpater version2 to add cations to the image dataset, which has only images themselves with no captions instead of making them by the human. LORA-BIAS-7B has been used as the pre-trained model data and we limited the token size as 26 to make the lenght of caption in one sentence and adapt it to Fromage perperly.
+* This project is to pre-process the dataset for the Fromage multi-modal model. Since the Fromage dataset should be in the paired image-caption data format, we use the Llama Adapter version 2 to add captions to the image dataset, which only contains images themselves with no captions, instead of creating them manually. LORA-BIAS-7B has been used as the pre-trained model data and we have limited the token size to 26 to ensure the length of the caption is a single sentence and adapt it properly to Fromage.
 
 ## News
 * [July 5, 2023] Release pre-traininig and fine-tuning codes.
