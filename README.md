@@ -87,16 +87,25 @@ The dataset used 12,957 pairs of images and captions.
 
 It took approximately 30 minutes per epoch, and memory used 22GB of GPU and 38GB of CPU.
 
-In the V100 environment, LLM model is a maximum model that can be used by Facebook/opt-1.3b model and Visual model is an openai/clip-bit-large-patch14 model.
+In the V100 environment, the LLM model is the maximum model available for the Facebook/opt-1.3b model and the Visual model for the openai/clip-bit-large-patch14 model.
 
 ## Inference
 
 For inference, there is an example in the file test_inference.ipynb.
 
+It took memory used 17GB of GPU and 42GB of CPU.
+
 The change point is to proceed by receiving input, some parameter values, and output methods have been changed.
 
 ## Demo
 
+The demo is a chat app created with a flutter and has its contents in the server.py and flutter_demo folders,
+
+and is an interaction between the input and output values entered in the inference.
+
+Please refer to the link below for the folder and contents.
+
+[Demo folder Link](https://github.com/seungu1108/fromage_fashion/tree/main/flutter_demo#flutter-for-demo)
 
 ## Reference
 FROMAGe : [Paper](https://arxiv.org/abs/2301.13823) | [Project Webpage](https://jykoh.com/fromage) | [Demo](https://huggingface.co/spaces/jykoh/fromage)
