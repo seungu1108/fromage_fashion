@@ -1,6 +1,6 @@
-# try_chatbot2
+# FLUTTER for demo
 
-A new Flutter project.
+A Flutter project for our model's demo 
 
 ## Getting Started
 
