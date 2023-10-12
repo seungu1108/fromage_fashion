@@ -1,6 +1,8 @@
 # FLUTTER for demo
 
-A Flutter project for our model's demo 
+A Flutter project for our model's demo.
+This flutter project was created under the name try_chatbot2.
+
 
 ## Getting Started
 
