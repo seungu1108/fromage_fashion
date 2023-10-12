@@ -18,7 +18,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-We modified some of the contents of the 'requirement.txt' file.
+We modified some of the contents of the `requirement.txt` file.
 
 Because I changed torch, torchvision, torchaudio to the latest version for sm_80 compatibility of gpu, and I saved the related files on google drive, so I added gdown.
 
@@ -29,13 +29,13 @@ export PYTHONPATH=$PYTHONPATH:/home/path/to/fromage/
 
 ### pikle file
 
-The format was similar to the cc3mpkl file from the image, but the project needed url data for link connections, so we added item_url in the format of capture, image, and item_url.
+The format was similar to the cc3m pkl file from the image, but the project needed url data for link connections, so we added item_url in the format of capture, image, and item_url.
 
-This can be seen in 'fromage/extract_img_embs.py'.
+This can be seen in `fromage/extract_img_embs.py`.
 
 The file is excluded because it is data from a specific company.
 
-The change point is that if the precision of img_emb is set to bfloat16, an error occurs, so I changed it to floor32 of lumpy and added item_url column.
+The change point is that if the precision of img_emb is set to bfloat16, an error occurs, so I changed it to float32 of numpy and added item_url column.
 
 The tsv file format is as follows.
 
@@ -47,7 +47,7 @@ Mountains  mountain.png http://mountain.jpg
 
 ### Pretrained Checkpoints
 
-We needed the model weight trained by FROMAGe for fine-tuning, so we overwritten the value of the prune model weight in the weight file trained once in test_weight.py.
+We needed the model weight trained by FROMAGe for fine-tuning, so we overwritten the value of the prune model weight in the weight file trained once in `test_weight.py`.
 
 You can change the location of the model file you trained once and the weighted file location of the prune model provided by fromage and run it.
 
@@ -55,11 +55,15 @@ You can change the location of the model file you trained once and the weighted 
 
 ### Generating Caption
 
+We used LLAMA to generate caption data because we had image data but there was no caption data to match it.
 
+`LLaMA-Adapter_2/llama_adapter_v2_multimodal7b/working/llama_test.py` proceeded through the corresponding script and used 7B here at [Link](https://github.com/shawwn/llama-dl/) for the weighted file.
+
+It generated 12,957 captions and took about 11 hours.
 
 ### Preparing Dataset
 
-To create the same shape as cc3m in the existing FROMAGe, we set it as the create_our_dataset function in the test.py file.
+To create the same shape as cc3m in the existing FROMAGe, we set it as the create_our_dataset function in the `test.py` file.
 
 This is also data for a particular company, so we excluded the files.
 
@@ -87,11 +91,13 @@ The dataset used 12,957 pairs of images and captions.
 
 It took approximately 30 minutes per epoch, and memory used 22GB of GPU and 38GB of CPU.
 
-In the V100 environment, the LLM model is the maximum model available for the Facebook/opt-1.3b model and the Visual model for the openai/clip-bit-large-patch14 model.
+LLM Model : Facebook/opt-1.3b Model and Visual Model : Openai/clip-bit-large-patch14 Model are the largest available models in the V100 environment.
+
+As a peculiarity of the V100 environment, the precision of fp16,bf16 was not available because it could operate only with fp32.
 
 ## Inference
 
-For inference, there is an example in the file test_inference.ipynb.
+For inference, there is an example in the file `test_inference.ipynb`.
 
 It took memory used 17GB of GPU and 42GB of CPU.
 
@@ -99,7 +105,7 @@ The change point is to proceed by receiving input, some parameter values, and ou
 
 ## Demo
 
-The demo is a chat app created with a flutter and has its contents in the server.py and flutter_demo folders,
+The demo is a chat app created with a flutter and has its contents in the `server.py` and `flutter_demo` folders,
 
 and is an interaction between the input and output values entered in the inference.
 
@@ -114,4 +120,7 @@ recommend image and url data : https://www.brandi.co.kr
 
 training data : https://www.tag-walk.com/en/
 
+generate caption model : https://github.com/Alpha-VLLM/LLaMA2-Accessory
+
+generate caption model weight : https://github.com/shawwn/llama-dl/
 
