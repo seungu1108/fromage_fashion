@@ -8,25 +8,12 @@ This repository stores code for fine-tuning and model weighting of FROMAGe.
 
 For pkl files, we excluded data from a specific company because it was used.
 
-## Setup instructions
+## Team
+[Kim Seol A](https://github.com/kxxseola) | [Nam Hee jung](https://github.com/eveningwalk) | [Baek Min Hong](None)
 
-### Environment
-Set up a new virtualenv, and install required libraries:
-```
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
+This project was carried out with the above personnel.
 
-We modified some of the contents of the `requirement.txt` file.
-
-Because I changed torch, torchvision, torchaudio to the latest version for sm_80 compatibility of gpu, and I saved the related files on google drive, so I added gdown.
-
-Add the `fromage` library to PYTHONPATH:
-```
-export PYTHONPATH=$PYTHONPATH:/home/path/to/fromage/
-```
-
+## Preparing
 ### pikle file
 
 The format was similar to the cc3m pkl file from the image, but the project needed url data for link connections, so we added item_url in the format of capture, image, and item_url.
@@ -50,8 +37,6 @@ We needed the model weight trained by FROMAGe for fine-tuning, so we overwritten
 
 You can change the location of the model file you trained once and the weighted file location of the prune model provided by fromage and run it.
 
-## Training
-
 ### Generating Caption
 
 We used LLAMA to generate caption data because we had image data but there was no caption data to match it.
@@ -66,27 +51,13 @@ Please refer to the link below for the folder and contents.
 
 ### Preparing Dataset
 
-To create the same shape as cc3m in the existing FROMAGe, we set it as the create_our_dataset function in the `test.py` file.
+To create the same shape as cc3m in the existing FROMAGe, we set it as the `create_our_dataset` function in the `test.py` file.
 
 This is also data for a particular company, so we excluded the files.
 
-### Training FROMAGe
+## Training
 
-After preparing Dataset as detailed above, you can start a new training job with the following command line flag:
-
-```
-python -u '/home/fromage/main.py' \
-        --multiprocessing-distributed \ --epochs=21 \
-        --resume='/home/fromage/fromage_model/test_model/ckpt.pth.tar' \
-        --max-len=177 \ --world-size 1 \ --rank 0 \ --dataset=cc3m  \ --val-dataset=cc3m \
-        --dataset_dir='/home/fromage/datasets' \
-        --opt-version='facebook/opt-6.7b' \
-        --visual-model='openai/clip-vit-large-patch14' \
-        --image-dir='/home/fromage/datasets/images/'  \
-        --log-base-dir='/home/fromage/runs/' \
-        --exp_name='exp_00003' \ --learning-rate=0.00003 \
-        --batch-size=6 \ --print-freq=100 \ --precision='bf16'
-```
+You can run the `running` function in the `test.py` file for training.
 
 We did it in the A100 40GB environment of the google cloud platform,
 
@@ -106,6 +77,9 @@ It took memory used 17GB of GPU and 42GB of CPU.
 
 The change point is to proceed by receiving input, some parameter values, and output methods have been changed.
 
+### example
+<img width="909" alt="image" src="https://github.com/seungu1108/fromage_fashion/assets/29696196/755daadb-3998-4b76-addf-8cb18cf51727">
+
 ## Demo
 
 The demo is a chat app created with a flutter and has its contents in the `server.py` and `flutter_demo` folders,
@@ -115,6 +89,15 @@ and is an interaction between the input and output values entered in the inferen
 Please refer to the link below for the folder and contents.
 
 [Demo folder Link](https://github.com/seungu1108/fromage_fashion/tree/main/flutter_demo#flutter-for-demo)
+
+## To-do
+- [x] Use LLAMA to generate caption data
+- [x] Create a pikle file for project data
+- [x] Change prune model weight to full model weight for fine-tuning
+- [x] Fine-tuning learning of the FROMAGe model
+- [x] Create Demo app using Flutter
+- [ ] V100 also uses fp16 to make it lighter for larger models
+- [ ] Lightweight treatment using LLM models with Lora
 
 ## Reference
 FROMAGe : [Paper](https://arxiv.org/abs/2301.13823) | [Project Webpage](https://jykoh.com/fromage) | [Demo](https://huggingface.co/spaces/jykoh/fromage)
@@ -127,3 +110,5 @@ generate caption model : https://github.com/Alpha-VLLM/LLaMA2-Accessory
 
 generate caption model weight : https://github.com/shawwn/llama-dl/
 
+## Acknowledge
+This project was created with the support of [AIffel](https://www.aiffel.io/?utm_source=modulabs&utm_medium=on_banner_all&utm_campaign=kdt_23_06&utm_content=m_bran_main-bn_everyone).
