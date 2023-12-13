@@ -13,6 +13,9 @@ For pkl files, we excluded data from a specific company because it was used.
 
 This project was carried out with the above personnel.
 
+## Papers
+[Papers selected for KSC 2023](https://github.com/seungu1108/fromage_fashion/blob/main/paper/fromage_fashion.pdf)
+
 ## Preparing
 ### pikle file
 
